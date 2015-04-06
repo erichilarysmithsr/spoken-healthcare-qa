@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/germanattanasio/IBMWatson-QA-Speech.git"
+    "url": "https://github.com/germanattanasio/spoken-healthcare-qa.git"
   },
   "author": "Andrew M. Trice",
   "contributors": [
@@ -27,7 +27,7 @@
   ],
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/germanattanasio/IBMWatson-QA-Speech/issues"
+    "url": "https://github.com/germanattanasio/spoken-healthcare-qa/issues"
   },
   "scripts": {
     "start": "node app.js"
