@@ -23,6 +23,8 @@ Give it a try! Click the button below to fork into IBM DevOps Services and deplo
 ## License
 
   This sample code is licensed under Apache 2.0. Full license text is available in [LICENSE](LICENSE).
+### Dependencies
+  jQuery(MIT), socket.io(MIT) and browser-detector(MIT)
 
 ## Contributing
 

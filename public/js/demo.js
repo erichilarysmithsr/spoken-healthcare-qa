@@ -1,18 +1,30 @@
+/**
+ * Copyright 2014 IBM Corp. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/* global $, Speech*/
+
+'use strict';
+
 var searchTimeout = 0;
-
-
-//fill and submit the form with a random example
-function showExample(submit) {
-  loadExample();
-  if (submit)
-    $('#qaForm').submit();
-}
+var speech = new Speech();
 
 function loadQuery(query) {
   $('#questionText').val(query);
 }
 
-//fill and submit the form with a random example
+// fill and submit the form with a random example
 function search(query, submit) {
   loadQuery(query);
 
@@ -43,7 +55,7 @@ function speakContent(id) {
   speech.speak(text);
 }
 
-$('#qaForm').submit(function(e) {
+$('#qaForm').submit(function() {
   var form = $(this);
   $.ajax({
     url: form.attr('action'),
@@ -57,6 +69,8 @@ $('#qaForm').submit(function(e) {
         if (target.hasClass('playing')) {
           target.removeClass('playing');
           speech.stop();
+          //remove button styles in the demo
+          $('.playAnswer').removeClass('playing');
         } else {
           speakContent(event.target.getAttribute('id'));
         }
@@ -66,7 +80,7 @@ $('#qaForm').submit(function(e) {
   return false;
 });
 
-$('#listen').click(function(e) {
+$('#listen').click(function() {
   switch (speechState) {
     case 'listening':
       speech.recognizeAbort();
@@ -74,6 +88,8 @@ $('#listen').click(function(e) {
       break;
     case 'speaking':
       speech.stop();
+      //remove button styles in the demo
+      $('.playAnswer').removeClass('playing');
       $('.play').removeClass('playing');
       setButtonState('default');
       break;
@@ -90,7 +106,6 @@ $('#listen').click(function(e) {
 var speechState = '';
 
 function setButtonState(state) {
-  console.log(state);
   var button = $('#listen');
   speechState = state;
 
@@ -117,5 +132,4 @@ $(document).ready(function() {
   } else {
     $('.ie-speak .arrow-box').hide();
   }
-
-})
+});

@@ -17,15 +17,13 @@
 'use strict';
 
 var express = require('express'),
-    app = express(),
-    server = require('http').createServer(app),
-    io = require('socket.io').listen(server),
-    fs = require('fs'),
-    bluemix = require('./config/bluemix'),
-    watson = require('watson-developer-cloud'),
-    extend = require('util')._extend,
-    UAparser = require('ua-parser-js'),
-    userAgentParser = new UAparser();
+  app = express(),
+  server = require('http').createServer(app),
+  io = require('socket.io').listen(server),
+  watson = require('watson-developer-cloud'),
+  extend = require('util')._extend,
+  UAparser = require('ua-parser-js'),
+  userAgentParser = new UAparser();
 
 // setup express
 require('./config/express')(app);
@@ -34,22 +32,22 @@ require('./config/express')(app);
 // Setup credentials - populate the url, username and password.
 // if you're running on a local node.js environment
 var QA_CREDENTIALS = {
-    username: '<username question-and-answer>',
-    password: '<password question-and-answer>',
-    version: 'v1',
-    dataset: 'healthcare'
+  username: '<username question-and-answer>',
+  password: '<password question-and-answer>',
+  version: 'v1',
+  dataset: 'healthcare'
 };
 
 var TTS_CREDENTIALS = {
-    username: '<username texto-to-speech>',
-    password: '<password texto-to-speech>',
-    version:'v1'
+  username: '<username texto-to-speech>',
+  password: '<password texto-to-speech>',
+  version: 'v1'
 };
 
 var STT_CREDENTIALS = {
-    username: '<username speech-to-text>',
-    password: '<password speech-to-text>',
-    version:'v1'
+  username: '<username speech-to-text>',
+  password: '<password speech-to-text>',
+  version: 'v1'
 };
 
 // setup watson services
@@ -61,52 +59,59 @@ var textToSpeech = watson.text_to_speech(TTS_CREDENTIALS);
 require('./config/socket')(io, speechToText);
 
 // render index page
-app.get('/', function(req, res){
-    res.render('index');
+app.get('/', function(req, res) {
+  res.render('index');
 });
 
 // render index page
-app.get('/tos', function(req, res){
-    res.render('tos');
+app.get('/tos', function(req, res) {
+  res.render('tos');
 });
 
 // Handle the form POST containing the question to ask Watson and reply with the answer
-app.post('/ask', function(req, res){
-    question_and_answer_healthcare.ask({ text: req.body.questionText}, function (err, response) {
-        if (err){
-            console.log('error:', err);
-            return res.status(err.code || 500).json(response);
-        } else {
-            var response = extend({ 'answers': response[0] }, req.body);
-            return res.render('response', response);
-        }
-    });
+app.post('/ask', function(req, res) {
+  question_and_answer_healthcare.ask({
+    text: req.body.questionText
+  }, function(err, answers) {
+    if (err) {
+      console.log('error:', err);
+      return res.status(err.code || 500).json(answers);
+    } else {
+      var response = extend({
+        'answers': answers[0]
+      }, req.body);
+      return res.render('response', response);
+    }
+  });
 });
 
 // Handle requests to synthesize speech from text
 app.get('/synthesize', function(req, res) {
-    var userAgent = userAgentParser.setUA(req.headers['user-agent']);
-    var extension = 'wav';
-    var accept ='audio/wav';
+  var userAgent = userAgentParser.setUA(req.headers['user-agent']);
+  var extension = 'wav';
+  var accept = 'audio/wav';
 
-    if (supportOgg(userAgent)) {
-        extension = 'ogg';
-        accept = 'audio/ogg; codecs=opus';
-    }
+  if (supportOgg(userAgent)) {
+    extension = 'ogg';
+    accept = 'audio/ogg; codecs=opus';
+  }
 
-    var transcript = textToSpeech.synthesize(extend({ accept: accept}, req.query));
-    transcript.on('response', function(response) {
-        response.headers['content-disposition'] = 'inline; filename=transcript.' + extension;
-    });
-    transcript.pipe(res);
+  var transcript = textToSpeech.synthesize(extend({
+    accept: accept
+  }, req.query));
+  transcript.on('response', function(response) {
+    response.headers['content-disposition'] = 'inline; filename=transcript.' + extension;
+  });
+  transcript.pipe(res);
 
 });
 
 // Return true if the User Agent support ogg files
 function supportOgg(userAgent) {
-    var browserName = userAgent.getBrowser().name;
-    var osName = userAgent.getOS().name;
-    return (((browserName == 'Chrome' || browserName == 'Canary') & osName != 'Android') || browserName == 'Opera' || browserName == 'Firefox');
+  var browserName = userAgent.getBrowser().name;
+  var osName = userAgent.getOS().name;
+  return (((browserName === 'Chrome' || browserName === 'Canary') & osName !== 'Android') ||
+    browserName === 'Opera' || browserName === 'Firefox');
 }
 
 // Start server

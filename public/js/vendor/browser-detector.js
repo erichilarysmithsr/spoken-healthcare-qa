@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 'use strict';
+
 /*
 This code is made by James Zhang.
 This is a very basic browser sniffer.

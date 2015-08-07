@@ -6,7 +6,7 @@ div.col-lg-12
       if answers.question.evidencelist && answers.question.evidencelist.length > 0
         each answer, index in answers.question.evidencelist
           if index == 0
-            | <script> speakContent("0"); </script>
+            | <script> speakContent('0'); </script>
           div.form-group.row
             div.col-lg-12
               div
@@ -23,4 +23,4 @@ div.col-lg-12
     div.well
       div.form-group.row
         div.col-lg-12
-          p(style="font-weight:bold;color:red;") Error: #{error}
+          p(style='font-weight:bold;color:red;') Error: #{error}

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+/* global io */
 'use strict';
 
 /**

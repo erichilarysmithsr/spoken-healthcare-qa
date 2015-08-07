@@ -1,19 +1,19 @@
 //- layout.jade
 doctype html
-html(lang="en")
+html(lang='en')
   head
     block title
       title Watson Spoken Healthcare QA
 
-    meta(charset="utf-8")
-    meta(http-equiv="X-UA-Compatible", content="IE=edge")
-    meta(name="viewport", content="width=device-width, initial-scale=1")
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
 
-    link(rel="shortcut icon", href="/images/favicon.ico", type="image/x-icon")
-    link(rel="icon", href="/images/favicon.ico", type="image/x-icon")
-    link(rel="stylesheet", href="/css/watson-bootstrap-dark.css")
-    link(rel="stylesheet", href="/css/browser-compatibility.css")
-    link(rel="stylesheet", href="/css/style.css")
+    link(rel='shortcut icon', href='/images/favicon.ico', type='image/x-icon')
+    link(rel='icon', href='/images/favicon.ico', type='image/x-icon')
+    link(rel='stylesheet', href='/css/watson-bootstrap-dark.css')
+    link(rel='stylesheet', href='/css/browser-compatibility.css')
+    link(rel='stylesheet', href='/css/style.css')
     block extrahead
   body
     block body-content
@@ -31,7 +31,7 @@ html(lang="en")
               div.col-lg-10.col-md-10
                 h2 Watson Spoken Healthcare Question and Answer
                 p The 
-                  a(href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/question-answer.html") IBM Watson™ Question Answer (QA) service
+                  a(href='http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/question-answer.html') IBM Watson™ Question Answer (QA) service
                   |  provides an API that give you the power of the IBM Watson cognitive computing system.
                   |  With this service,
                   | you can connect to Watson, pose questions in natural language, and receive responses
@@ -48,21 +48,21 @@ html(lang="en")
           div.col-lg-12
             h3 Disclaimer
             p The Watson API is incredibly powerful, but this sample is using the 
-              a(href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/qaapi/") sample public healthcare
+              a(href='http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/qaapi/') sample public healthcare
               |  data set, which is only trained to answer 
-              a(href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/qaapi/#corpora") specific kinds of questions
+              a(href='http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/qaapi/#corpora') specific kinds of questions
               | . Check this out to see what a properly trained Watson instance can do for you. This demo requires getUserMedia 
               | for speech recognition and HTML5 audio for playing sounds. Parts of this demo may
               | not work if your browser does not support these features.
     div.container.footer
       div.row.text-center(style='margin:10px 0px 15px 0px;')
-        a(href="/tos") Terms of Use
+        a(href='/tos') Terms of Use
         |  | 
-        a(href="http://www.ibm.com/privacy/us/en/") Privacy Policy
-    script(type='text/javascript', src="/js/css_browser_selector.js")
-    script(type='text/javascript', src="/js/browser-detector.js")
-    script(type='text/javascript', src="/js/jquery-1.11.1.min.js")
+        a(href='http://www.ibm.com/privacy/us/en/') Privacy Policy
+    script(type='text/javascript', src='/js/vendor/css_browser_selector.js')
+    script(type='text/javascript', src='/js/vendor/browser-detector.js')
+    script(type='text/javascript', src='/js/vendor/jquery-1.11.1.min.js')
+    script(type='text/javascript', src='/js/vendor/socket.io.js')
     script(type='text/javascript', src='/js/speech-recognizer.js')
-    script(type='text/javascript', src='/js/socket.io.js')
-    script(type='text/javascript', src="/js/demo.js")
-    script(type='text/javascript', src="/js/speech.js")
+    script(type='text/javascript', src='/js/demo.js')
+    script(type='text/javascript', src='/js/speech.js')
