@@ -70,9 +70,7 @@ app.get('/tos', function(req, res) {
 
 // Handle the form POST containing the question to ask Watson and reply with the answer
 app.post('/ask', function(req, res) {
-  question_and_answer_healthcare.ask({
-    text: req.body.questionText
-  }, function(err, answers) {
+  question_and_answer_healthcare.ask(req.body, function(err, answers) {
     if (err) {
       console.log('error:', err);
       return res.status(err.code || 500).json(answers);
