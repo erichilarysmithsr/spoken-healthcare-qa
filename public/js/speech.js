@@ -22,6 +22,17 @@ function Speech() {
   $('#audio').append(this.audio);
 
   this.recognizer = new SpeechRecognizer({ws: '', model: 'WatsonModel' });
+
+  var self = this;
+  this.recognizer.onresult = function(data) {
+    var result = data.results[data.results.length - 1];
+    var transcript = result.alternatives[0].transcript;
+    search(transcript, result.final);
+
+    if (result.final) {
+      self.stop();
+    }
+  };
 }
 
 Speech.prototype.speak = function(message) {
@@ -34,25 +45,6 @@ Speech.prototype.speak = function(message) {
 
 Speech.prototype.stop = function() {
   this.audio.get(0).pause();
-};
-
-Speech.prototype.onstart = function() {
-  console.log('speech.recognizer.onstart');
-};
-
-Speech.prototype.onerror = function(error) {
-  console.log('speech.recognizer.onerror:', error);
-};
-
-Speech.prototype.onresult = function(data) {
-  var result = data.results[data.results.length - 1];
-  var transcript = result.alternatives[0].transcript;
-
-  search(transcript, result.final);
-
-  if (result.final) {
-    this.stop();
-  }
 };
 
 Speech.prototype.recognize = function() {

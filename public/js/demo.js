@@ -30,10 +30,7 @@ function search(query, submit) {
 
   if (submit) {
     clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(function() {
-
-      $('#qaForm').submit();
-    }, 100);
+    searchTimeout = setTimeout(askQuestion, 100);
   }
 }
 
@@ -55,15 +52,10 @@ function speakContent(id) {
   speech.speak(text);
 }
 
-$('#qaForm').submit(function() {
-  var form = $(this);
-  $.ajax({
-    url: form.attr('action'),
-    type: form.attr('method'),
-    data: form.serialize(),
-    success: function(response) {
+function askQuestion(){
+  $.post('/ask', { text: $('#questionText').val() })
+    .done(function(response) {
       $('#result').html(response);
-
       $('#result').find('.play').click(function(event) {
         var target = $(event.target);
         if (target.hasClass('playing')) {
@@ -75,10 +67,11 @@ $('#qaForm').submit(function() {
           speakContent(event.target.getAttribute('id'));
         }
       });
-    }
-  });
-  return false;
-});
+    })
+    .fail(function (error) {
+      console.log('error:',error);
+    });
+}
 
 $('#listen').click(function() {
   switch (speechState) {
